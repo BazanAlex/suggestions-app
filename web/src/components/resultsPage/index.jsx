@@ -16,6 +16,7 @@ export class ResultsPage extends Component {
 
         this.addSuggestion = this.addSuggestion.bind(this);
         this.deleteParagraph = this.deleteParagraph.bind(this);
+        this.approveParagraph = this.approveParagraph.bind(this);
     }
 
     componentDidMount() {
@@ -32,6 +33,7 @@ export class ResultsPage extends Component {
         const target = this.state.paragraphs.find(p => p.articleUrl === articleUrl &&
             p.originalText === originalText);
 
+        // get id here from api
         target.suggestions.push({
             usersText
         });
@@ -42,6 +44,19 @@ export class ResultsPage extends Component {
     }
 
     deleteParagraph(paragraph) {
+        // api call
+
+        this.removeFromCollection(paragraph);
+    }
+
+    approveParagraph(paragraph, suggestionId) {
+        // api call
+
+        console.log('approving', paragraph, suggestionId);
+        this.removeFromCollection(paragraph); // one thing! If it's approved page, then not doing that
+    }
+
+    removeFromCollection(paragraph) {
         const newParagraphs = this.state.paragraphs
             .filter(p => p.originalText !== paragraph.originalText ||
                 p.articleUrl !== paragraph.articleUrl);
@@ -61,7 +76,8 @@ export class ResultsPage extends Component {
                     paragraphs={this.state.paragraphs}
                     addSuggestion={this.addSuggestion}
                     newSuggestionData={this.state.newSuggestion}
-                    deleteParagraph={this.deleteParagraph} />}
+                    deleteParagraph={this.deleteParagraph}
+                    approveParagraph={this.approveParagraph} />}
         </section>);
     }
 }

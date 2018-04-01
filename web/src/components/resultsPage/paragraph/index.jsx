@@ -10,6 +10,7 @@ export class Paragraph extends Component {
 
         this.addSuggestion = this.addSuggestion.bind(this);
         this.deleteParagraph = this.deleteParagraph.bind(this);
+        this.approve = this.approve.bind(this);
     }
 
     addSuggestion(usersText) {
@@ -22,11 +23,19 @@ export class Paragraph extends Component {
         this.props.deleteParagraph(this.props.paragraph);
     }
 
+    approve(suggestionId) {
+        // suggestion here!
+        this.props.approveParagraph(this.props.paragraph, suggestionId);
+    }
+
     render() {
         const paragraph = this.props.paragraph;
         const suggestions = paragraph
             .suggestions.map((s, i) => 
-                <Suggestion suggestion={s} key={i} />);
+                <Suggestion 
+                    suggestion={s}
+                    approve={this.approve}
+                    key={i} />);
 
         return (<div className="paragraph">
             <button
