@@ -32,7 +32,28 @@ router.get('/', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-    res.send('paragraph is deleted');
+    console.log('req.query.id', req.params.id)
+    Paragraph.findOneAndRemove({ _id: req.params.id },
+        (err, paragraph) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send();
+                return;
+            }
+            if (!paragraph) {
+                res.status(404).send();
+                return;
+            }
+
+            Suggestion.find({ paragraph: paragraph._id })
+                .remove().exec((err) => {
+                    if (err) {
+                        console.error(err);
+                    }
+
+                    res.status(204).send();
+                });
+        })
 });
 
 module.exports = router;
