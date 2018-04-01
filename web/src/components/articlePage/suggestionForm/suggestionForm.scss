@@ -1,0 +1,59 @@
+$grey: #ccc;
+$blue-grey: #657ba0;
+
+.suggestion-form {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border: 1px solid $grey;
+    box-shadow: 0 0 5px rgba($grey, 0.5);
+
+    &:not(:last-child) {
+        margin-bottom: 15px;
+    }
+
+    > *:not(:last-child) {
+        margin-bottom: 10px;
+    }
+
+    .definition {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: $blue-grey;
+    }
+
+    textarea {
+        width: 100%;
+        border: 1px solid $blue-grey;
+        border-radius: 5px;
+        padding: 5px;
+        min-height: 3em;
+        max-height: 10em;
+        resize: vertical;
+    }
+
+    button[type=submit] {
+        color: $blue-grey;
+        text-transform: uppercase;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+    }
+
+    .checkmark {
+        $size: 30px;
+
+        border-radius: 50%;
+        border: 1px solid $blue-grey;
+        padding: 5px;
+        width: $size;
+        height: $size;
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    > footer {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
