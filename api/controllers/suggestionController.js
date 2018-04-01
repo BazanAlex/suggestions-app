@@ -63,4 +63,26 @@ router.post('/', (req, res) => {
         });
 });
 
+router.patch('/:id', (req, res) => {
+    const body = req.body;
+
+    Suggestion
+        .findByIdAndUpdate(req.params.id, 
+            { isApproved: body.isApproved },
+            { new: true },
+            (err, updated) => {
+                if (err) {
+                    res.status(500).send();
+                    return;
+                }
+
+                if (!updated) {
+                    res.status(404).send();
+                    return;
+                }
+
+                res.send(updated);
+        });
+});
+
 module.exports = router;
