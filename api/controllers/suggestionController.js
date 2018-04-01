@@ -1,12 +1,66 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/', (req, res) => {
-    // check for existing paragraph
-    // if no, create one with the same articleUrl and OriginalText
-    // else push to existing one
+const Suggestion = require('../models/suggestion');
+const Paragraph = require('../models/paragraph');
 
-    res.send('Suggestion is created');
+function saveSuggestion(req, res, paragraphId) {
+    const body = req.body;
+
+    const itemToSave = new Suggestion({
+        articleUrl: body.articleUrl,
+        originalText: body.originalText,
+        usersText: body.usersText,
+        isApproved: false,
+        paragraph: paragraphId
+    });
+
+    itemToSave.save((err, saved) => {
+        if (err) {
+            console.error(err);
+        }
+
+        res.send(saved);
+    });
+}
+
+function saveParagraph(req, res, callback) {
+    const body = req.body;
+
+    const paragraphToSave = new Paragraph({
+        articleUrl: body.articleUrl,
+        originalText: body.originalText
+    });
+
+    paragraphToSave.save((err, saved) => {
+        if (err) {
+            console.err(err);
+        }
+        callback(req, res, saved);
+    });
+}
+
+router.post('/', (req, res) => {
+    const body = req.body;
+
+    Paragraph
+        .findOne({
+            articleUrl: body.articleUrl,
+            originalText: body.originalText
+        }).exec((err, paragraph) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+
+            if (paragraph) {
+                saveSuggestion(req, res, paragraph._id);
+            } else {
+                saveParagraph(req, res, (req, res, paragraph) => {
+                    saveSuggestion(req, res, paragraph._id);
+                });
+            }
+        });
 });
 
 module.exports = router;
