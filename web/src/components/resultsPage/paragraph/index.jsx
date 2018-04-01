@@ -9,12 +9,17 @@ export class Paragraph extends Component {
         super(props);
 
         this.addSuggestion = this.addSuggestion.bind(this);
+        this.deleteParagraph = this.deleteParagraph.bind(this);
     }
 
     addSuggestion(usersText) {
         const {articleUrl, originalText} = this.props.paragraph;
 
         this.props.addSuggestion(articleUrl, originalText, usersText);
+    }
+
+    deleteParagraph() {
+        this.props.deleteParagraph(this.props.paragraph);
     }
 
     render() {
@@ -24,7 +29,9 @@ export class Paragraph extends Component {
                 <Suggestion suggestion={s} key={i} />);
 
         return (<div className="paragraph">
-            <button className="std-btn danger delete-btn">Delete</button>
+            <button
+                onClick={this.deleteParagraph}
+                className="std-btn danger delete-btn">Delete</button>
             <div>
                 <div className="term">
                     Original text

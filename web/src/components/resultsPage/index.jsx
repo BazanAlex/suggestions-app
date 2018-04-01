@@ -15,6 +15,7 @@ export class ResultsPage extends Component {
         };
 
         this.addSuggestion = this.addSuggestion.bind(this);
+        this.deleteParagraph = this.deleteParagraph.bind(this);
     }
 
     componentDidMount() {
@@ -40,6 +41,16 @@ export class ResultsPage extends Component {
         });
     }
 
+    deleteParagraph(paragraph) {
+        const newParagraphs = this.state.paragraphs
+            .filter(p => p.originalText !== paragraph.originalText ||
+                p.articleUrl !== paragraph.articleUrl);
+
+        this.setState({
+            paragraphs: newParagraphs
+        });
+    }
+
     render() {
         return (<section className="page-container">
             <h2>Paragraph Page</h2>
@@ -48,7 +59,9 @@ export class ResultsPage extends Component {
                 <Spinner middle={true} size="50px" /> :
                 <ParagraphList
                     paragraphs={this.state.paragraphs}
-                    addSuggestion={this.addSuggestion} />}
+                    addSuggestion={this.addSuggestion}
+                    newSuggestionData={this.state.newSuggestion}
+                    deleteParagraph={this.deleteParagraph} />}
         </section>);
     }
 }

@@ -12,7 +12,9 @@ export class NewSuggestion extends Component {
         this.handleTextChange = this.handleTextChange.bind(this);
     }
 
-    addSuggestion() {
+    addSuggestion(event) {
+        event.preventDefault();
+
         this.props.addSuggestion(this.state.text);
     }
 
@@ -24,19 +26,19 @@ export class NewSuggestion extends Component {
 
     render() {
         return (
-            <div className="suggestion">
+            <form className="suggestion"
+                onSubmit={this.addSuggestion}>
                 <input
                     value={this.state.text}
                     onChange={this.handleTextChange}
                     className="std-input"
                     placeholder="Enter your own suggestion" />
 
-                <button
-                    onClick={this.addSuggestion}
+                <button type="submit"
                     className="std-btn success">
                     Add
                 </button>
-            </div>
+            </form>
         );
     }
 }
