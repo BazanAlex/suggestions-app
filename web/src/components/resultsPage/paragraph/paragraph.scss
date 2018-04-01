@@ -26,4 +26,15 @@ $padding: 10px;
         top: $padding;
         right: $padding;
     }
+
+    .suggestion {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 70%;
+    
+        &:not(:last-child) {
+            margin-bottom: 5px;
+        }
+    }
 }

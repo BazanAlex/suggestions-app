@@ -13,6 +13,8 @@ export class ResultsPage extends Component {
             paragraphs: [],
             busy: false
         };
+
+        this.addSuggestion = this.addSuggestion.bind(this);
     }
 
     componentDidMount() {
@@ -23,13 +25,30 @@ export class ResultsPage extends Component {
         });
     }
 
+    addSuggestion(articleUrl, originalText, usersText) {
+        // api call
+
+        const target = this.state.paragraphs.find(p => p.articleUrl === articleUrl &&
+            p.originalText === originalText);
+
+        target.suggestions.push({
+            usersText
+        });
+
+        this.setState({
+            paragraphs: this.state.paragraphs
+        });
+    }
+
     render() {
         return (<section className="page-container">
             <h2>Paragraph Page</h2>
 
             {this.state.busy ? 
                 <Spinner middle={true} size="50px" /> :
-                <ParagraphList paragraphs={this.state.paragraphs} />}
+                <ParagraphList
+                    paragraphs={this.state.paragraphs}
+                    addSuggestion={this.addSuggestion} />}
         </section>);
     }
 }

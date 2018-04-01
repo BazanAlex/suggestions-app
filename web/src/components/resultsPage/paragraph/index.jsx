@@ -2,10 +2,19 @@ import React, {Component} from 'react';
 
 import './paragraph.scss';
 import {Suggestion} from './suggestion';
+import {NewSuggestion} from './newSuggestion';
 
 export class Paragraph extends Component {
     constructor(props) {
         super(props);
+
+        this.addSuggestion = this.addSuggestion.bind(this);
+    }
+
+    addSuggestion(usersText) {
+        const {articleUrl, originalText} = this.props.paragraph;
+
+        this.props.addSuggestion(articleUrl, originalText, usersText);
     }
 
     render() {
@@ -30,6 +39,7 @@ export class Paragraph extends Component {
 
                 <div className="suggestion-list">
                     {suggestions}
+                    <NewSuggestion addSuggestion={this.addSuggestion} />
                 </div>
             </div>
         </div>);
