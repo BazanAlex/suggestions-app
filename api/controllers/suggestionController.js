@@ -66,9 +66,15 @@ router.post('/', (req, res) => {
 router.patch('/:id', (req, res) => {
     const body = req.body;
 
+    const updateObj = {};
+
+    if (body.isApproved != undefined) {
+        updateObj.isApproved = body.isApproved;
+    }
+
     Suggestion
         .findByIdAndUpdate(req.params.id, 
-            { isApproved: body.isApproved },
+            updateObj,
             { new: true },
             (err, updated) => {
                 if (err) {
