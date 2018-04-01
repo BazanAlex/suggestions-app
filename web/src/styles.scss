@@ -55,3 +55,10 @@ textarea {
         filter: brightness(1.1);
     }
 }
+
+.std-input {
+    outline: none;
+    border: none;
+    padding: 5px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}

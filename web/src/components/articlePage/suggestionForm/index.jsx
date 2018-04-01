@@ -9,10 +9,12 @@ export class SuggestionForm extends Component {
         super(props);
 
         this.state = {
-            busy: false
+            busy: false,
+            text: ''
         };
 
         this.submit = this.submit.bind(this);
+        this.handleTextChange = this.handleTextChange.bind(this);
     }
 
     submit(event) {
@@ -23,6 +25,14 @@ export class SuggestionForm extends Component {
         // api call
         this.setState({
             busy: true
+        });
+    }
+
+    handleTextChange(event) {
+        console.log('new text', event.target.value);
+
+        this.setState({
+            text: event.target.value
         });
     }
 
@@ -40,8 +50,9 @@ export class SuggestionForm extends Component {
                 <div>
                     <label>
                         <div className="definition">users version</div>
-                        <textarea 
-                            defaultValue={paragraph}
+                        <textarea
+                            value={this.state.text}
+                            onChange={this.handleTextChange}
                             placeholder="Enter your own suggestion"></textarea>
                     </label>
                 </div>

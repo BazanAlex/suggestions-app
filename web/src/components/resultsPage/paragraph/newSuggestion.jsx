@@ -28,6 +28,7 @@ export class NewSuggestion extends Component {
                 <input
                     value={this.state.text}
                     onChange={this.handleTextChange}
+                    className="std-input"
                     placeholder="Enter your own suggestion" />
 
                 <button
