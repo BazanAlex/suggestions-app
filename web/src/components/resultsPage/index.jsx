@@ -37,13 +37,21 @@ export class ResultsPage extends Component {
         const target = this.state.paragraphs.find(p => p.articleUrl === articleUrl &&
             p.originalText === originalText);
 
-        // get id here from api
-        target.suggestions.push({
+        Api.submitSuggestion({
+            articleUrl,
+            originalText,
             usersText
-        });
+        }).then(res => {
+            console.log('suggestion res is', res);
 
-        this.setState({
-            paragraphs: this.state.paragraphs
+            target.suggestions.push({
+                usersText: res.usersText,
+                _id: res._id
+            });
+
+            this.setState({
+                paragraphs: this.state.paragraphs
+            });
         });
     }
 

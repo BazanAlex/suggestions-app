@@ -26,7 +26,7 @@ export class ArticlePage extends Component {
             article: this.state.article
         });
 
-        Api.sugmitSuggestion({
+        Api.submitSuggestion({
             articleUrl: this.articleUrl,
             originalText: paragraph.originalText,
             usersText: paragraph.usersText

@@ -13,7 +13,7 @@ export class Api {
         }).catch(this.handleError);
     }
 
-    static sugmitSuggestion({articleUrl,
+    static submitSuggestion({articleUrl,
             originalText,
             usersText}) {
 
@@ -29,7 +29,7 @@ export class Api {
             headers: this.defaultHeaders
         }).then((res) => {
             if (res.ok) {
-                return Promise.resolve();
+                return res.json();
             }
 
             throw new Error(res.statusText);
