@@ -8,57 +8,44 @@ export class SuggestionForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            busy: false,
-            text: ''
-        };
-
         this.submit = this.submit.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
     }
 
     submit(event) {
         event.preventDefault();
+        const {paragraph, submitSuggestion} = this.props;
 
-        console.log('submitting');
-        // validation
-        // api call
-        this.setState({
-            busy: true
-        });
+        submitSuggestion(paragraph);
     }
 
     handleTextChange(event) {
-        console.log('new text', event.target.value);
-
-        this.setState({
-            text: event.target.value
-        });
+        this.props.updateSuggestion(event.target.value, this.props.paragraph);
     }
 
     render() {
-        const paragraph = this.props.paragraph;
+        const par = this.props.paragraph;
 
         return (
             <form onSubmit={this.submit}
                 className="suggestion-form">
                 <div>
                     <div className="definition">original text</div>
-                    <div>{paragraph}</div>
+                    <div>{par.originalText}</div>
                 </div>
 
                 <div>
                     <label>
                         <div className="definition">users version</div>
                         <textarea
-                            value={this.state.text}
+                            value={par.usersText}
                             onChange={this.handleTextChange}
                             placeholder="Enter your own suggestion"></textarea>
                     </label>
                 </div>
 
                 <footer>
-                    {this.state.busy ? <Spinner size="30px" /> : <ApplyBtn />}
+                    {par.busy ? <Spinner size="30px" /> : <ApplyBtn />}
                 </footer>
             </form>
         );
@@ -77,5 +64,5 @@ const ApplyBtn = (props) => {
 }
 
 SuggestionForm.propTypes = {
-    paragraph: PropTypes.string.isRequired
+    paragraph: PropTypes.object.isRequired
 };

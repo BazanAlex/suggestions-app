@@ -10,7 +10,32 @@ export class Api {
             }
 
             throw new Error(res.statusText);
-        })
-        .catch((err) => console.error(err));
+        }).catch(this.handleError);
+    }
+
+    static sugmitSuggestion({articleUrl,
+            originalText,
+            usersText}) {
+
+        const body = JSON.stringify({
+            articleUrl,
+            originalText,
+            usersText
+        });
+
+        return fetch(`${apiUrl}/suggestion`, {
+            method: 'POST',
+            body
+        }).then((res) => {
+            if (res.ok) {
+                return Promise.resolve();
+            }
+
+            throw new Error(res.statusText);
+        }).catch(this.handleError);
+    }
+
+    static handleError(err) {
+        console.error(err);
     }
 }

@@ -3,7 +3,6 @@ import query from 'query-string';
 
 import './articlePage.scss';
 import {SuggestionFormList} from './suggestionFormList';
-import {ApiStub} from '../../api-stub';
 import {Spinner} from '../spinner';
 import {Api} from '../../api';
 
@@ -16,19 +15,59 @@ export class ArticlePage extends Component {
             },
             busy: false
         };
+
+        this.submitSuggestion = this.submitSuggestion.bind(this);
+        this.updateSuggestion = this.updateSuggestion.bind(this);
+    }
+
+    submitSuggestion(paragraph) {
+        paragraph.busy = true;
+        this.setState({
+            article: this.state.article
+        });
+
+        Api.sugmitSuggestion({
+            articleUrl: this.articleUrl,
+            originalText: paragraph.originalText,
+            usersText: paragraph.usersText
+        }).then((res) => {
+            paragraph.busy = false;
+
+            this.setState({
+                article: this.state.article
+            });
+        })
+    }
+
+    updateSuggestion(newUsersText, paragraph) {
+        paragraph.usersText = newUsersText;
+
+        this.setState({
+            article: this.state.article
+        });
+    }
+
+    get articleUrl() {
+        return query.parse(location.search).articleUrl;
     }
 
     componentDidMount() {
-        const articleUrl = query.parse(location.search).articleUrl;
-        console.log('articleUrl', articleUrl);
-
-        const article = ApiStub.getArticle();
-
         this.setState({ busy: true });
-        Api.getArticle(articleUrl)
+        Api.getArticle(this.articleUrl)
             .then((article) => {
-                this.setState({ 
-                    article,
+                const articleState = {
+                    title: article.title,
+                    paragraphs: article.paragraphs.map((p) => {
+                        return {
+                            originalText: p,
+                            usersText: p,
+                            isBusy: false
+                        };
+                    })
+                }
+
+                this.setState({
+                    article: articleState,
                     busy: false
                 });
             });
@@ -39,7 +78,10 @@ export class ArticlePage extends Component {
             <section className="page-container">
                 {this.state.busy ? 
                     <Spinner middle={true} size="50px" /> : 
-                    <SuggestionFormList article={this.state.article} />}
+                    <SuggestionFormList
+                        article={this.state.article}
+                        submitSuggestion={this.submitSuggestion}
+                        updateSuggestion={this.updateSuggestion} />}
             </section>
         );
     }
