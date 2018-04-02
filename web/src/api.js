@@ -25,7 +25,8 @@ export class Api {
 
         return fetch(`${apiUrl}/suggestion`, {
             method: 'POST',
-            body
+            body,
+            headers: this.defaultHeaders
         }).then((res) => {
             if (res.ok) {
                 return Promise.resolve();
@@ -35,7 +36,25 @@ export class Api {
         }).catch(this.handleError);
     }
 
+    static getGroupedSuggestions(showApproved = false) {
+        return fetch(`${apiUrl}/paragraph?showApproved=${showApproved}`, {
+            method: 'GET'
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            }
+
+            throw new Error(res.statusText);
+        }).catch(this.handleError);
+    }
+
     static handleError(err) {
         console.error(err);
+    }
+
+    static get defaultHeaders() {
+        return {
+            'Content-Type': 'application/json'
+        };
     }
 }

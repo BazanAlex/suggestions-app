@@ -6,6 +6,7 @@ const Paragraph = require('../models/paragraph');
 
 function saveSuggestion(req, res, paragraphId) {
     const body = req.body;
+    console.log('body for suggestion', body);
 
     const itemToSave = new Suggestion({
         articleUrl: body.articleUrl,
@@ -36,6 +37,8 @@ function saveParagraph(req, res, callback) {
         if (err) {
             console.err(err);
         }
+        console.log('paragraph saved', saved);
+
         callback(req, res, saved);
     });
 }

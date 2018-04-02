@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import './resultsPage.scss';
-import {ApiStub} from '../../api-stub';
+import {Api} from '../../api';
 import {ParagraphList} from './paragraphList';
 import {Spinner} from '../spinner';
 
@@ -20,11 +20,15 @@ export class ResultsPage extends Component {
     }
 
     componentDidMount() {
-        const paragraphs = ApiStub.suggestionsGrpByParagraphs();
+        this.setState({ busy: true });
 
-        this.setState({
-            paragraphs
-        });
+        Api.getGroupedSuggestions()
+            .then(paragraphs => {
+                this.setState({
+                    paragraphs,
+                    busy: false
+                });
+            });
     }
 
     addSuggestion(articleUrl, originalText, usersText) {

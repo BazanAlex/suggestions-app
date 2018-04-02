@@ -5,6 +5,8 @@ const Paragraph = require('../models/paragraph');
 const Suggestion = require('../models/suggestion');
 
 function getSuggestions(suggestions, paragraphId) {
+    console.log('suggestions', suggestions);
+
     return suggestions.filter(s => {
         return s.paragraph.equals(paragraphId);
     });
@@ -21,7 +23,7 @@ router.get('/', (req, res) => {
                 return;
             }
             Suggestion.find({
-                showApproved
+                isApproved: showApproved
             }).exec((err, suggestions) => {
                 paragraphs.forEach(p => {
                     p.suggestions = getSuggestions(suggestions, p._id);
