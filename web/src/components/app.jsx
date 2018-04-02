@@ -11,7 +11,7 @@ export class App extends Component {
             <div>
                 <Switch>
                     <Route exact path="/" component={ArticlePage} />
-                    <Route path="/results" component={ResultsPage} />
+                    <Route exact path="/results" component={ResultsPage} />
                     <Route component={PageNotFound} />
                 </Switch>
             </div>

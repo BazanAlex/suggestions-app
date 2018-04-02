@@ -35,7 +35,10 @@ export class ResultsPage extends Component {
 
     get showApproved() {
         const showApprovedParam = query.parse(location.search).showApproved;
-        return JSON.parse(showApprovedParam);
+        if (showApprovedParam) {
+            return JSON.parse(showApprovedParam);
+        } 
+        return false;
     }
 
     addSuggestion(articleUrl, originalText, usersText) {

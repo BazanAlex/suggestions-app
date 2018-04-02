@@ -32,7 +32,7 @@ $paddingTop: 20px;
     .suggestion {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: baseline;
         max-width: 70%;
     
         &:not(:last-child) {
