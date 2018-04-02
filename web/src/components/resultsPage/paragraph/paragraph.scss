@@ -1,9 +1,11 @@
 $blue: blue;
 $padding: 10px;
+$paddingTop: 20px;
 
 .paragraph {
     border: 2px solid $blue;
     padding: $padding;
+    padding-top: $paddingTop;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
     position: relative;
 

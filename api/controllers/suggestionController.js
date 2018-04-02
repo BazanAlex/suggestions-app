@@ -69,28 +69,19 @@ router.post('/', (req, res) => {
 router.patch('/:id', (req, res) => {
     const body = req.body;
 
-    const updateObj = {};
-
-    if (body.isApproved != undefined) {
-        updateObj.isApproved = body.isApproved;
+    if (!body.isApproved) {
+        res.status(400).send(); // bad request
     }
 
-    Suggestion
-        .findByIdAndUpdate(req.params.id, 
-            updateObj,
-            { new: true },
-            (err, updated) => {
-                if (err) {
-                    res.status(500).send();
-                    return;
-                }
-
-                if (!updated) {
-                    res.status(404).send();
-                    return;
-                }
-
-                res.send(updated);
+    Suggestion.findById(req.params.id)
+        .then(approved => {
+            Suggestion.update({ paragraph: approved.paragraph },
+                    { isApproved: false }, { multi: true })
+                .then((updated) => { // only one should be approved
+                    Suggestion.findByIdAndUpdate(req.params.id, 
+                        { isApproved: true },
+                        { new: true }).then(final => res.send(final));
+                })
         });
 });
 

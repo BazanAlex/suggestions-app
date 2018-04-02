@@ -77,6 +77,12 @@ export class ResultsPage extends Component {
                 if (this.showApproved) {
                     const approvedSug = paragraph
                         .suggestions.find(s => s._id === suggestionId);
+
+                    // disaproving others
+                    paragraph.suggestions
+                        .filter(s => s._id !== suggestionId)
+                        .forEach(s => s.isApproved = false);
+
                     approvedSug.isApproved = true;
                     
                     this.setState({ paragraphs: this.state.paragraphs });
