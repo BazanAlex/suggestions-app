@@ -36,6 +36,22 @@ export class Api {
         }).catch(this.handleError);
     }
 
+    static approveSuggestion(id) {
+        const body = { isApproved: true };
+
+        return fetch(`${apiUrl}/suggestion/${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(body),
+            headers: this.defaultHeaders
+        }).then(res => {
+            if (res.ok) {
+                return Promise.resolve();
+            }
+
+            throw new Error(res.statusText);
+        }).catch(this.handleError);
+    }
+
     static getGroupedSuggestions(showApproved = false) {
         return fetch(`${apiUrl}/paragraph?showApproved=${showApproved}`, {
             method: 'GET'

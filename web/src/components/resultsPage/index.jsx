@@ -57,7 +57,11 @@ export class ResultsPage extends Component {
         // api call
 
         console.log('approving', paragraph, suggestionId);
-        this.removeFromCollection(paragraph); // one thing! If it's approved page, then not doing that
+
+        Api.approveSuggestion(suggestionId)
+            .then(() => {
+                this.removeFromCollection(paragraph); // one thing! If it's approved page, then not doing that
+            });
     }
 
     removeFromCollection(paragraph) {

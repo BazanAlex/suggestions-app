@@ -8,7 +8,7 @@ export class Suggestion extends Component {
     }
 
     approve() {
-        this.props.approve(this.props.suggestion.id);
+        this.props.approve(this.props.suggestion._id);
     }
 
     render() {
