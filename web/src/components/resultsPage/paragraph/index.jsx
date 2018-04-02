@@ -24,7 +24,6 @@ export class Paragraph extends Component {
     }
 
     approve(suggestionId) {
-        // suggestion here!
         this.props.approveParagraph(this.props.paragraph, suggestionId);
     }
 

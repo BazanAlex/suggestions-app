@@ -33,7 +33,8 @@ export class ResultsPage extends Component {
     }
 
     get showApproved() {
-        return query.parse(location.search).showApproved;
+        const showApprovedParam = query.parse(location.search).showApproved;
+        return JSON.parse(showApprovedParam);
     }
 
     addSuggestion(articleUrl, originalText, usersText) {
@@ -73,7 +74,15 @@ export class ResultsPage extends Component {
     approveParagraph(paragraph, suggestionId) {
         Api.approveSuggestion(suggestionId)
             .then(() => {
-                this.removeFromCollection(paragraph); // one thing! If it's approved page, then not doing that
+                if (this.showApproved) {
+                    const approvedSug = paragraph
+                        .suggestions.find(s => s._id === suggestionId);
+                    approvedSug.isApproved = true;
+                    
+                    this.setState({ paragraphs: this.state.paragraphs });
+                } else {
+                    this.removeFromCollection(paragraph);
+                }
             });
     }
 

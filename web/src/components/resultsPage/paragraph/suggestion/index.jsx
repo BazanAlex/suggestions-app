@@ -13,13 +13,17 @@ export class Suggestion extends Component {
 
     render() {
         const suggestion = this.props.suggestion;
+        const btnText =  suggestion.isApproved ? 'Approved' : 'Approve';
 
         return (<div className="suggestion">
             {suggestion.usersText}
 
             <button
                 onClick={this.approve}
-                className="std-btn success">Approve</button>
+                disabled={suggestion.isApproved}
+                className="std-btn success">
+                {btnText}
+            </button>
         </div>);
     }
 }

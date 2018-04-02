@@ -1,5 +1,6 @@
 $danger: #e04166;
 $success: #6bd653;
+$disabled: #ccc;
 
 html {
     font-size: 14px;
@@ -53,6 +54,11 @@ textarea {
 
     &:hover {
         filter: brightness(1.1);
+    }
+
+    &[disabled] {
+        background: $disabled;
+        pointer-events: none;
     }
 }
 
