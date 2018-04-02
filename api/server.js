@@ -2,8 +2,10 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 app.use(bodyParser.json());
+app.use(cors());
 
 let port = process.env.PORT || 8585;
 const db = 'mongodb://localhost:27017/suggestion-db';

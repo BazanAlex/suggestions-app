@@ -20,18 +20,18 @@ router.get('/', (req, res) => {
         const $ = cheerio.load(body);
         const rootOfSearch = $('article.article-entity');
 
-        const paragraphs = rootOfSearch.find('p');
-        const paragraphContents = [];
+        const paragraphNodes = rootOfSearch.find('p');
+        const paragraphs = [];
 
-        paragraphs.each((i, el) => {
-            paragraphContents.push($(el).text());
+        paragraphNodes.each((i, el) => {
+            paragraphs.push($(el).text());
         });
 
         const title = rootOfSearch.find('h2.headline').text();
 
         res.send({
             title,
-            paragraphContents
+            paragraphs
         });
     })
 });

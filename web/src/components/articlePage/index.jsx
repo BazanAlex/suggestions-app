@@ -5,6 +5,7 @@ import './articlePage.scss';
 import {SuggestionFormList} from './suggestionFormList';
 import {ApiStub} from '../../api-stub';
 import {Spinner} from '../spinner';
+import {Api} from '../../api';
 
 export class ArticlePage extends Component {
     constructor(props) {
@@ -22,11 +23,15 @@ export class ArticlePage extends Component {
         console.log('articleUrl', articleUrl);
 
         const article = ApiStub.getArticle();
-        // api call
 
-        this.setState({
-            article
-        });
+        this.setState({ busy: true });
+        Api.getArticle(articleUrl)
+            .then((article) => {
+                this.setState({ 
+                    article,
+                    busy: false
+                });
+            });
     }
 
     render() {

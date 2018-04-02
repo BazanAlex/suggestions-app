@@ -8,6 +8,6 @@ import './styles.scss';
 const appContainer = document.getElementById('app');
 
 ReactDOM.render(
-    <BrowserRouter>
+    <BrowserRouter basename="fb/">
         <App />
     </BrowserRouter>, appContainer);
