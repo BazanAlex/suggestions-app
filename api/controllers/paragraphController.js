@@ -5,8 +5,6 @@ const Paragraph = require('../models/paragraph');
 const Suggestion = require('../models/suggestion');
 
 function getSuggestions(suggestions, paragraphId) {
-    console.log('suggestions', suggestions);
-
     return suggestions.filter(s => {
         return s.paragraph.equals(paragraphId);
     });
@@ -14,7 +12,8 @@ function getSuggestions(suggestions, paragraphId) {
 
 // get all not approved paragraphs
 router.get('/', (req, res) => {
-    const showApproved = req.query.showApproved;
+    const showApprovedQuery = req.query.showApproved;
+    const showApproved = JSON.parse(showApprovedQuery);
 
     Paragraph.find({})
         .exec((err, paragraphs) => {
@@ -22,13 +21,23 @@ router.get('/', (req, res) => {
                 console.error(err);
                 return;
             }
-            Suggestion.find({
-                isApproved: showApproved
-            }).exec((err, suggestions) => {
-                paragraphs.forEach(p => {
-                    p.suggestions = getSuggestions(suggestions, p._id);
-                });
-                res.send(paragraphs);
+            Suggestion.find({})
+                .exec((err, suggestions) => {
+                    paragraphs.forEach(p => {
+                        p.suggestions = getSuggestions(suggestions, p._id);
+                    });
+
+                    let result = [];
+
+                    if (showApproved) {
+                        result = paragraphs
+                            .filter(p => p.suggestions.some(s => s.isApproved));
+                    } else {
+                        result = paragraphs
+                            .filter(p => p.suggestions.every(s => !s.isApproved));
+                    }
+
+                    res.send(result);
             });
         });
 });

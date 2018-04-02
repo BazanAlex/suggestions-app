@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import query from 'query-string';
 
 import './resultsPage.scss';
 import {Api} from '../../api';
@@ -22,13 +23,17 @@ export class ResultsPage extends Component {
     componentDidMount() {
         this.setState({ busy: true });
 
-        Api.getGroupedSuggestions()
+        Api.getGroupedSuggestions(this.showApproved)
             .then(paragraphs => {
                 this.setState({
                     paragraphs,
                     busy: false
                 });
             });
+    }
+
+    get showApproved() {
+        return query.parse(location.search).showApproved;
     }
 
     addSuggestion(articleUrl, originalText, usersText) {
