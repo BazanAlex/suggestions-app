@@ -56,16 +56,16 @@ export class ResultsPage extends Component {
     }
 
     deleteParagraph(paragraph) {
-        // api call
+        this.setState({ busy: true });
 
-        this.removeFromCollection(paragraph);
+        Api.deleteParagraph(paragraph._id)
+            .then(() => {
+                this.removeFromCollection(paragraph);
+                this.setState({ busy: false });
+            });
     }
 
     approveParagraph(paragraph, suggestionId) {
-        // api call
-
-        console.log('approving', paragraph, suggestionId);
-
         Api.approveSuggestion(suggestionId)
             .then(() => {
                 this.removeFromCollection(paragraph); // one thing! If it's approved page, then not doing that
