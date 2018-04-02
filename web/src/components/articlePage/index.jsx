@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import query from 'query-string';
+import * as Toastr from 'toastr';
 
 import './articlePage.scss';
 import {SuggestionFormList} from './suggestionFormList';
@@ -36,6 +37,8 @@ export class ArticlePage extends Component {
             this.setState({
                 article: this.state.article
             });
+
+            Toastr.info(`Suggestion "${paragraph.usersText}" is submitted`);
         })
     }
 

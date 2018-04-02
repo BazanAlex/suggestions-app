@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import query from 'query-string';
+import * as Toastr from 'toastr';
 
 import './resultsPage.scss';
 import {Api} from '../../api';
@@ -66,6 +67,9 @@ export class ResultsPage extends Component {
             .then(() => {
                 this.removeFromCollection(paragraph);
                 this.setState({ busy: false });
+
+                Toastr.warning(`Paragraph "${paragraph.originalText}"
+                    was removed with all suggestions`);
             });
     }
 
@@ -86,6 +90,8 @@ export class ResultsPage extends Component {
                     this.setState({ paragraphs: this.state.paragraphs });
                 } else {
                     this.removeFromCollection(paragraph);
+                    Toastr.info(`Suggestion for paragraph 
+                        "${paragraph.originalText}" is approved`)
                 }
             });
     }
