@@ -3,6 +3,7 @@ import {Route, Switch} from 'react-router-dom';
 
 import {ArticlePage} from './articlePage';
 import {ResultsPage} from './resultsPage';
+import {PageNotFound} from './pageNotFound';
 
 export class App extends Component {
     render() {
@@ -11,6 +12,7 @@ export class App extends Component {
                 <Switch>
                     <Route exact path="/" component={ArticlePage} />
                     <Route path="/results" component={ResultsPage} />
+                    <Route component={PageNotFound} />
                 </Switch>
             </div>
         );

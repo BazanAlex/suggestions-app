@@ -38,8 +38,6 @@ export class ResultsPage extends Component {
     }
 
     addSuggestion(articleUrl, originalText, usersText) {
-        // api call
-
         const target = this.state.paragraphs.find(p => p.articleUrl === articleUrl &&
             p.originalText === originalText);
 

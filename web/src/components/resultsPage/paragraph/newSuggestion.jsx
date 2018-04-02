@@ -28,7 +28,7 @@ export class NewSuggestion extends Component {
         return (
             <form className="suggestion"
                 onSubmit={this.addSuggestion}>
-                <input
+                <input required
                     value={this.state.text}
                     onChange={this.handleTextChange}
                     className="std-input"

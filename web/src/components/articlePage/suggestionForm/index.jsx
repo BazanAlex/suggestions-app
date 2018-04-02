@@ -37,7 +37,7 @@ export class SuggestionForm extends Component {
                 <div>
                     <label>
                         <div className="definition">users version</div>
-                        <textarea
+                        <textarea required
                             value={par.usersText}
                             onChange={this.handleTextChange}
                             placeholder="Enter your own suggestion"></textarea>
