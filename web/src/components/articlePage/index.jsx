@@ -39,6 +39,9 @@ export class ArticlePage extends Component {
             });
 
             Toastr.info(`Suggestion "${paragraph.usersText}" is submitted`);
+        }).catch(err => {
+            this.setState({ busy: false });
+            Toastr.error('Unexpected error occured');
         })
     }
 
@@ -73,6 +76,9 @@ export class ArticlePage extends Component {
                     article: articleState,
                     busy: false
                 });
+            }).catch(err => {
+                this.setState({ busy: false });
+                Toastr.error('Unexpected error occured');
             });
     }
 

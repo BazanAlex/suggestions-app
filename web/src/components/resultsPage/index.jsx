@@ -30,7 +30,7 @@ export class ResultsPage extends Component {
                     paragraphs,
                     busy: false
                 });
-            });
+            }).catch(this.handleError);
     }
 
     get showApproved() {
@@ -60,7 +60,7 @@ export class ResultsPage extends Component {
             this.setState({
                 paragraphs: this.state.paragraphs
             });
-        });
+        }).catch(this.handleError);
     }
 
     deleteParagraph(paragraph) {
@@ -73,7 +73,7 @@ export class ResultsPage extends Component {
 
                 Toastr.warning(`Paragraph "${paragraph.originalText}"
                     was removed with all suggestions`);
-            });
+            }).catch(this.handleError);
     }
 
     approveParagraph(paragraph, suggestionId) {
@@ -96,7 +96,12 @@ export class ResultsPage extends Component {
                     Toastr.info(`Suggestion for paragraph 
                         "${paragraph.originalText}" is approved`)
                 }
-            });
+            }).catch(this.handleError);
+    }
+
+    handleError(err) {
+        this.setState({ busy: false });
+        Toastr.error('Unexpected error occured while doing operation');
     }
 
     removeFromCollection(paragraph) {
